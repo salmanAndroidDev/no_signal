@@ -13,7 +13,8 @@ ALLOWED_HOSTS = []
 sys.path.insert(0, os.path.join(BASE_DIR, 'no_signal'))
 
 INSTALLED_APPS = [
-    'no_signal.accounts',  # local
+    'no_signal.accounts',
+    'no_signal.courses',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,6 +37,8 @@ ROOT_URLCONF = 'config.urls'
 
 AUTH_USER_MODEL = 'accounts.user'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'no_signal/media')
 
 TEMPLATES = [
     {

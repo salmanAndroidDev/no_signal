@@ -10,7 +10,7 @@ RUN apk add --update --no-cache postgresql-client
 # Install individual dependencies
 # so that we could avoid installing extra packages to the container
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
-	gcc libc-dev linux-headers postgresql-dev
+	gcc libc-dev linux-headers postgresql-dev zlib-dev
 RUN pip install -r /requirements.txt
 
 # Remove dependencies
@@ -21,5 +21,5 @@ WORKDIR /no_signal
 COPY . /no_signal
 
 # [Security] Limit the scope of user who run the docker image
-RUN adduser -D user
-USER user
+#RUN adduser -D user
+#USER user
