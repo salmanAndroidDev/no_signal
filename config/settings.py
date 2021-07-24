@@ -1,25 +1,19 @@
 import os
+import sys
 from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-zzelv7(tdtb3@vr)=-uh=d&%!7*e!ab+ki6ao#$7!3m=jk6#-6'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
-# Application definition
+sys.path.insert(0, os.path.join(BASE_DIR, 'no_signal'))
 
 INSTALLED_APPS = [
+    'no_signal.accounts',  # local
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +33,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+AUTH_USER_MODEL = 'accounts.user'
+
 
 TEMPLATES = [
     {
