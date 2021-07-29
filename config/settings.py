@@ -13,8 +13,10 @@ ALLOWED_HOSTS = []
 sys.path.insert(0, os.path.join(BASE_DIR, 'no_signal'))
 
 INSTALLED_APPS = [
+    'no_signal.core',
     'no_signal.accounts',
     'no_signal.courses',
+    'no_signal.cms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
