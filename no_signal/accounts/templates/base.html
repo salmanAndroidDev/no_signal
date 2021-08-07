@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}No Signal{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+<div id="header">
+    <a href="/" class="logo">No Signal</a>
+    <ul class="menu">
+        {% if request.user.is_authenticated %}
+            <li>
+            <span style="color: #303b2f; opacity: 0.5;font-weight: bold;">
+                    {% if request.user.name %}
+                        Hi, {{ request.user.name }}
+                    {% else %}
+                        {{ request.user.email }}
+                    {% endif %}
+                    <a style="margin:20px" href="{% url 'manage_course_list' %}">Dashboard</a>
+
+            </span>
+            <a href="{% url 'logout' %}">Sign out</a>
+        {% else %}
+            <a href="{% url 'login' %}">Sign in</a>
+        {% endif %}
+        </li>
+    </ul>
+</div>
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<script>
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
+    });
+</script>
+</body>
+</html>

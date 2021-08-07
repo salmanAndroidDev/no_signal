@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }} modules{% endblock %}
+
+{% block content %}
+    <h1>{{ course.title }} modules</h1>
+
+    <div class="module">
+        {% for module in course.modules.all %}
+            <div class="course-info" style="padding-bottom:10px;">
+                <h3>{{ module.title }}</h3>
+                <p>
+                    <a href="{% url 'course_lesson_update' module.id %}">Edit Lessons</a>
+                    {% if module.lessons.count > 0 %}
+                        <a href="{% url 'lesson_content_list' module.lessons.first.id %}">
+                            Manage contents
+                        </a>
+                    {% endif %}
+
+                </p>
+
+
+
+                {% for lesson in module.lessons.all %}
+                    <span>{{ forloop.counter }}. {{ lesson.title }}</span><br>
+                {% endfor %}
+
+            </div>
+        {% empty %}
+            <p>You haven't created any module yet.</p>
+        {% endfor %}
+        <p>
+            <a href="{% url 'course_module_update' course.id %}" class="button">
+                Update modules
+            </a>
+        </p>
+    </div>
+{% endblock %}

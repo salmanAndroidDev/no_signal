@@ -45,6 +45,10 @@ class Course(AutoSaveMixin, TimeStampedModel):
     image = models.FileField(upload_to='courses/%Y/%m/%d/',
                              blank=True)
 
+    students = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                      related_name='courses_joined',
+                                      blank=True)
+
     class Meta:
         ordering = ('-created',)
 

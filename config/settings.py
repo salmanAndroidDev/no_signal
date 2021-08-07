@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-zzelv7(tdtb3@vr)=-uh=d&%!7*e!ab+ki6ao#$7!3m=jk6#-6'
@@ -9,13 +10,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 sys.path.insert(0, os.path.join(BASE_DIR, 'no_signal'))
 
 INSTALLED_APPS = [
     'no_signal.core',
     'no_signal.accounts',
-    'no_signal.courses',
     'no_signal.cms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'no_signal.courses',
+    'no_signal.students',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +43,10 @@ AUTH_USER_MODEL = 'accounts.user'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'no_signal/media')
 
+from django.urls import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -60,7 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -73,7 +77,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -93,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -106,7 +108,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

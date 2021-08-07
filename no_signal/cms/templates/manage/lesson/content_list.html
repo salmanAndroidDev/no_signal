@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load course %}
+
+{% block title %}
+    Lesson {{ lesson.order|add:1 }}: {{ lesson.title }}
+{% endblock %}
+
+{% block content %}
+    {% with module=lesson.module %}
+        <h1>Module "{{ module.title }}"</h1>
+        <div class="contents">
+            <h3>Lessons</h3>
+            <ul id="modules">
+                {% for l in module.lessons.all %}
+                    <li data-id="{{ l.id }}"
+                            {% if l == lesson %} class="selected" {% endif %}>
+                        <a href="{% url 'lesson_content_list' l.id %}">
+                        <span>
+                            Lesson <span class="order">{{ l.order|add:1 }}</span>
+                        </span>
+                            <br>
+                            {{ l.title }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>No modules yet.</li>
+                {% endfor %}
+            </ul>
+            <p><a href="{% url 'course_lesson_update' lesson.module.id %}">
+                Edit lessons</a></p>
+        </div>
+        <div class="module">
+            <h2>Lesson {{ lesson.order|add:1 }}: {{ lesson.title }}</h2>
+            <h3>Lesson content:</h3>
+            <div id="module-contents">
+                {% for content in lesson.contents.all %}
+                    <div data-id="{{ content.id }}">
+                        {% with item=content.item %}
+                            <p>{{ item }}</p>
+                            <a href="{% url 'lesson_content_update' lesson.id item|model_name item.id %}">Edit</a>
+                            <form action="{% url 'lesson_content_delete' content.id %}"
+                                  method="post">
+                                <input type="submit" value="Delete">
+                                {% csrf_token %}
+                            </form>
+                        {% endwith %}
+                    </div>
+                {% empty %}
+                    <p>This lesson has no contents yet.</p>
+                {% endfor %}
+            </div>
+            <h3>Add new content:</h3>
+            <ul class="content-types">
+                <li>
+                    <a href="{% url 'lesson_content_create' lesson.id 'text' %}">text</a>
+                </li>
+                <li>
+                    <a href="{% url 'lesson_content_create' lesson.id 'image' %}">image</a>
+                </li>
+                <li>
+                    <a href="{% url 'lesson_content_create' lesson.id 'video' %}">video</a>
+                </li>
+                <li>
+                    <a href="{% url 'lesson_content_create' lesson.id 'file' %}">file</a>
+                </li>
+            </ul>
+        </div>
+
+
+    {% endwith %}
+{% endblock %}

@@ -6,6 +6,7 @@ from courses.models import Lesson
 from core.models import TimeStampedModel
 from core.fields import OrderField
 from core.constants import GENERIC_RELATED_NAME
+from django.template.loader import render_to_string
 
 
 class Content(models.Model):
@@ -39,6 +40,11 @@ class ItemBase(TimeStampedModel):
     title = models.CharField(max_length=255,
                              blank=True,
                              null=True)
+
+    def render(self):
+        """Rendering contents in an abstract way"""
+        return render_to_string(f'courses/content/{self._meta.model_name}.html',
+                                {'item': self})
 
     class Meta:
         abstract = True
