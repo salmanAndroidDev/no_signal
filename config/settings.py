@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'no_signal.courses',
     'no_signal.students',
+    'embed_video',
+    'memcache_status',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +48,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'no_signal/media')
 from django.urls import reverse_lazy
 
 LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'memcached:11211',
+    }
+}
 
 TEMPLATES = [
     {
