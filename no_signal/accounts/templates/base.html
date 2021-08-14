@@ -18,8 +18,11 @@
                     {% else %}
                         {{ request.user.email }}
                     {% endif %}
+                {% if request.user.role == 't' %}
                     <a style="margin:20px" href="{% url 'manage_course_list' %}">Dashboard</a>
-
+                {% else %}
+                    <a style="margin:20px" href="{% url 'student_course_list' %}">Dashboard</a>
+                {% endif %}
             </span>
             <a href="{% url 'logout' %}">Sign out</a>
         {% else %}

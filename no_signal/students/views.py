@@ -1,11 +1,11 @@
 from django.urls import reverse_lazy
 from django.views import generic
 
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CourseEnrollForm
+from accounts.forms import UserRegistrationForm
 from courses.models import Course
 
 
@@ -14,14 +14,14 @@ class StudentRegistrationView(generic.edit.CreateView):
         View to create user
     """
     template_name = 'students/student/registration.html'
-    form_class = UserCreationForm
+    form_class = UserRegistrationForm
     success_url = reverse_lazy('student_course_list')
 
     def form_valid(self, form):
         """authenticate and login user after user creation"""
         result = super().form_valid(form)
         cd = form.cleaned_data
-        user = authenticate(username=cd['username'],
+        user = authenticate(username=cd['email'],
                             password=cd['password1'])
         login(self.request, user)
         return result
